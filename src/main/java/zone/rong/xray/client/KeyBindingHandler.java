@@ -1,10 +1,11 @@
 package zone.rong.xray.client;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
+
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiChat;
 import zone.rong.xray.FgtXRay;
 import zone.rong.xray.client.gui.GuiSettings;
 
@@ -14,7 +15,8 @@ public class KeyBindingHandler {
 
     @SubscribeEvent
     public void onKeyInput(KeyInputEvent event) {
-        if ((!FMLClientHandler.instance().isGUIOpen(GuiChat.class)) && (mc.currentScreen == null) && (mc.theWorld != null)) {
+        if ((!FMLClientHandler.instance()
+            .isGUIOpen(GuiChat.class)) && (mc.currentScreen == null) && (mc.theWorld != null)) {
             if (OresSearch.searchList.isEmpty()) // Populate the OresSearch.searchList
             {
                 OresSearch.get();

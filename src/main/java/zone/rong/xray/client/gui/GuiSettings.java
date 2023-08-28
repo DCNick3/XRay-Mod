@@ -1,5 +1,10 @@
 package zone.rong.xray.client.gui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.Tessellator;
@@ -7,16 +12,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
+
 import zone.rong.xray.FgtXRay;
 import zone.rong.xray.OreButtons;
 import zone.rong.xray.client.OresSearch;
 import zone.rong.xray.config.ConfigHandler;
 import zone.rong.xray.reference.OreInfo;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class GuiSettings extends GuiScreen {
 
@@ -31,6 +32,7 @@ public class GuiSettings extends GuiScreen {
         tessellator.addVertexWithUV(x + 0, y + 0, zLevel, 0, 0);
         tessellator.draw();
     }
+
     public boolean called = false;
     protected int pageCurrent = 0;
     protected int pageMax = 0;
@@ -41,7 +43,7 @@ public class GuiSettings extends GuiScreen {
 
     @Override
     public void drawScreen(int x, int y, float f) {
-        drawDefaultBackground();  // Draws the opaque black background
+        drawDefaultBackground(); // Draws the opaque black background
         // Right lets get a background :)
         mc.renderEngine.bindTexture(new ResourceLocation("fgtxray:textures/gui/Background.png"));
         drawTexturedQuadFit(width / 2 - 110, height / 2 - 110, 229, 193, 0);
@@ -51,7 +53,8 @@ public class GuiSettings extends GuiScreen {
     @Override
     protected void keyTyped(char par1, int par2) {
         super.keyTyped(par1, par2);
-        if ((par2 == 1) || (par2 == mc.gameSettings.keyBindInventory.getKeyCode()) || par2 == FgtXRay.keyBind_keys[FgtXRay.keyIndex_showXrayMenu].getKeyCode()) {
+        if ((par2 == 1) || (par2 == mc.gameSettings.keyBindInventory.getKeyCode())
+            || par2 == FgtXRay.keyBind_keys[FgtXRay.keyIndex_showXrayMenu].getKeyCode()) {
             // Close on esc, inventory key or keybind
             mc.thePlayer.closeScreen();
         }
@@ -64,8 +67,9 @@ public class GuiSettings extends GuiScreen {
             // Right clicked
             for (int i = 0; i < this.buttonList.size(); i++) {
                 GuiButton button = (GuiButton) this.buttonList.get(i);
-                if (button.func_146115_a()) { //func_146115_a() returns true if the button is being hovered
-                    //mc.theWorld.playSoundAtEntity( mc.thePlayer, "minecraft.sound.random.click", 1.0F, 1.0F ); TODO: click sound...
+                if (button.func_146115_a()) { // func_146115_a() returns true if the button is being hovered
+                    // mc.theWorld.playSoundAtEntity( mc.thePlayer, "minecraft.sound.random.click", 1.0F, 1.0F ); TODO:
+                    // click sound...
                     if (button.id == 98) {
                         if (FgtXRay.distIndex > 0) {
                             FgtXRay.distIndex--;
@@ -96,9 +100,11 @@ public class GuiSettings extends GuiScreen {
 
                     for (ItemStack stack : oreStack) {
                         if (stack == oreStack.get(oreStack.size() - 1)) {
-                            idMetaCsv.append(String.format("%d:%d )", Item.getIdFromItem(stack.getItem()), stack.getItemDamage()));
+                            idMetaCsv.append(
+                                String.format("%d:%d )", Item.getIdFromItem(stack.getItem()), stack.getItemDamage()));
                         } else {
-                            idMetaCsv.append(String.format("%d:%d, ", Item.getIdFromItem(stack.getItem()), stack.getItemDamage()));
+                            idMetaCsv.append(
+                                String.format("%d:%d, ", Item.getIdFromItem(stack.getItem()), stack.getItemDamage()));
                         }
                     }
                     System.out.println(idMetaCsv);
@@ -107,7 +113,13 @@ public class GuiSettings extends GuiScreen {
                 if (!OresSearch.searchList.isEmpty()) // Print out the searchList.
                 {
                     for (OreInfo ore : OresSearch.searchList) {
-                        System.out.printf("[Fgt XRay] OreInfo( %s, %d, %d, 0x%x, %b )%n", ore.oreName, ore.id, ore.meta, ore.color, ore.draw);
+                        System.out.printf(
+                            "[Fgt XRay] OreInfo( %s, %d, %d, 0x%x, %b )%n",
+                            ore.oreName,
+                            ore.id,
+                            ore.meta,
+                            ore.color,
+                            ore.draw);
                     }
                 }
                 break;
@@ -141,8 +153,8 @@ public class GuiSettings extends GuiScreen {
             default:
                 for (Map.Entry<String, OreButtons> entry : buttons.entrySet()) {
                     // Iterate through the buttons map and check what ores need to be toggled
-                    String key = entry.getKey();            // Block name (Diamond)
-                    OreButtons value = entry.getValue();    // OreButtons structure
+                    String key = entry.getKey(); // Block name (Diamond)
+                    OreButtons value = entry.getValue(); // OreButtons structure
 
                     if (value.id == button.id) {
                         // Matched the buttons unique id.
@@ -173,11 +185,14 @@ public class GuiSettings extends GuiScreen {
             return;
         }
 
-        this.buttons = new HashMap<String, OreButtons>(); // String id for the button. Same as the button text. (Diamond / Iron ect.)
+        this.buttons = new HashMap<String, OreButtons>(); // String id for the button. Same as the button text. (Diamond
+                                                          // / Iron ect.)
         this.buttonList.clear();
         pageIndex.clear(); // took me 2 hours to figure out i had forgotten this...
 
-        this.buttonList.add(aNextButton = new GuiButton(-150, width / 2 + 75, height / 2 + 52, 30, 20, ">"));                                     // Static next button
+        this.buttonList.add(aNextButton = new GuiButton(-150, width / 2 + 75, height / 2 + 52, 30, 20, ">")); // Static
+                                                                                                              // next
+                                                                                                              // button
         this.buttonList.add(aPrevButton = new GuiButton(-151, width / 2 - 100, height / 2 + 52, 30, 20, "<"));
 
         int x = width / 2 - 100;
@@ -189,10 +204,12 @@ public class GuiSettings extends GuiScreen {
         for (OreInfo ore : OresSearch.searchList) {
             if (buttons.get(ore.oreName) != null) {
                 // Button already created for this ore.
-                buttons.get(ore.oreName).ores.add(ore); // Add this new OreInfo to the internal ArrayList for this button
+                buttons.get(ore.oreName).ores.add(ore); // Add this new OreInfo to the internal ArrayList for this
+                                                        // button
             } else {
                 // Create the new button for this ore.
-                int id = Integer.parseInt(Integer.toString(ore.id) + ore.meta);                     // Unique button id. int( str(id) + str(meta) )
+                int id = Integer.parseInt(Integer.toString(ore.id) + ore.meta); // Unique button id. int( str(id) +
+                                                                                // str(meta) )
                 // very hacky... Need to keep an eye on it.
                 if (Count % 14 == 0 && Count != 0) {
                     Page++;
@@ -204,9 +221,18 @@ public class GuiSettings extends GuiScreen {
                     y = height / 2 - 100;
                     CountPerPage = 0;
                 }
-                pageIndex.add(new GuiPage(Page,
-                        new GuiButton(id, x, y, 100, 20, ore.oreName + ": " + (ore.draw ? "On" : "Off")))); // create new button and set the text to Name: On||Off
-                buttons.put(ore.oreName, new OreButtons(ore.oreName, id, ore)); // Add this new button to the buttons hashmap.
+                pageIndex.add(
+                    new GuiPage(
+                        Page,
+                        new GuiButton(id, x, y, 100, 20, ore.oreName + ": " + (ore.draw ? "On" : "Off")))); // create
+                                                                                                            // new
+                                                                                                            // button
+                                                                                                            // and set
+                                                                                                            // the text
+                                                                                                            // to Name:
+                                                                                                            // On||Off
+                buttons.put(ore.oreName, new OreButtons(ore.oreName, id, ore)); // Add this new button to the buttons
+                                                                                // hashmap.
                 y += 21.8; // Next button should be placed down from this one.
 
                 // this should reset each page to split the list :)
@@ -221,23 +247,33 @@ public class GuiSettings extends GuiScreen {
 
         // only draws the current page
         for (int a = 0; a < pageIndex.size(); a++) {
-            if (pageIndex.get(a).getPage() != pageCurrent) {
+            if (pageIndex.get(a)
+                .getPage() != pageCurrent) {
                 continue; // skip the ones that are not on this page.
             }
 
-            this.buttonList.add(pageIndex.get(a).getButton());
+            this.buttonList.add(
+                pageIndex.get(a)
+                    .getButton());
         }
 
         // because i am lazy
         int tempx = width / 2;
         this.buttonList.add(new GuiButton(97, tempx - 67, height / 2 + 52, 55, 20, "Add Ore"));
-        this.buttonList.add(new GuiButton(98,
+        this.buttonList.add(
+            new GuiButton(
+                98,
                 tempx - 10,
                 height / 2 + 52,
                 82,
                 20,
-                "Distance: " + FgtXRay.distStrings[FgtXRay.distIndex])); // Static button for printing the ore dictionary / searchList.
-        this.buttonList.add(new GuiButton(99, this.width - 102, this.height - 22, 100, 20, "Print OreDict")); // Static button for search distance.
+                "Distance: " + FgtXRay.distStrings[FgtXRay.distIndex])); // Static button for printing the ore
+                                                                         // dictionary / searchList.
+        this.buttonList.add(new GuiButton(99, this.width - 102, this.height - 22, 100, 20, "Print OreDict")); // Static
+                                                                                                              // button
+                                                                                                              // for
+                                                                                                              // search
+                                                                                                              // distance.
 
         if (pageMax < 1) {
             aNextButton.enabled = false;

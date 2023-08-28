@@ -11,7 +11,7 @@ public class GuiEditOre extends GuiScreen {
 
     @Override
     public void drawScreen(int x, int y, float f) {
-        drawDefaultBackground();  // Draws the opaque black background
+        drawDefaultBackground(); // Draws the opaque black background
         oreName.drawTextBox();
         super.drawScreen(x, y, f);
     }
@@ -36,10 +36,12 @@ public class GuiEditOre extends GuiScreen {
         {
             for (int i = 0; i < this.buttonList.size(); i++) {
                 GuiButton button = (GuiButton) this.buttonList.get(i);
-                if (button.func_146115_a()) //func_146115_a() returns true if the button is being hovered
+                if (button.func_146115_a()) // func_146115_a() returns true if the button is being hovered
                 {
-                    /* TODO: Allow editing of ores
-                     * if( button.id == 99 ){ */
+                    /*
+                     * TODO: Allow editing of ores
+                     * if( button.id == 99 ){
+                     */
                 }
             }
         }

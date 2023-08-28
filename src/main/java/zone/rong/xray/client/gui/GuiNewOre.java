@@ -5,7 +5,9 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
+
 import zone.rong.xray.client.OresSearch;
 
 public class GuiNewOre extends GuiScreen {
@@ -46,7 +48,6 @@ public class GuiNewOre extends GuiScreen {
         GL11.glVertex2d(width / 2 + 113, height / 2 - 63); // TR
         GL11.glEnd();
 
-
         // new
         // I want to render the item here but i am unsure on how to
         // do it so i am leaving it for now. :)
@@ -58,7 +59,7 @@ public class GuiNewOre extends GuiScreen {
     @Override
     protected void keyTyped(char par1, int par2) // par1 is char typed, par2 is ascii hex (tab=15 return=28)
     {
-        //System.out.println( String.format( "keyTyped: %c : %d", par1, par2 ) );
+        // System.out.println( String.format( "keyTyped: %c : %d", par1, par2 ) );
         super.keyTyped(par1, par2);
         if (oreName.isFocused()) {
             oreName.textboxKeyTyped(par1, par2);
@@ -123,10 +124,12 @@ public class GuiNewOre extends GuiScreen {
         {
             for (int i = 0; i < this.buttonList.size(); i++) {
                 GuiButton button = (GuiButton) this.buttonList.get(i);
-                if (button.func_146115_a()) //func_146115_a() returns true if the button is being hovered
+                if (button.func_146115_a()) // func_146115_a() returns true if the button is being hovered
                 {
-                    /*if( button.id == 99 ){
-                    }*/
+                    /*
+                     * if( button.id == 99 ){
+                     * }
+                     */
                 }
             }
         }
@@ -163,7 +166,8 @@ public class GuiNewOre extends GuiScreen {
         this.buttonList.add(new GuiButton(98, width / 2 + 5, height / 2 + 58, 108, 20, "Add")); // Add button
         this.buttonList.add(new GuiButton(99, width / 2 - 108, height / 2 + 58, 108, 20, "Cancel")); // Cancel button
 
-        //this.buttonList.add( new GuiButton( 8, width / 2 - 102, height / 2 + 80, 105, 20, "test" ) ); // Cancel button
+        // this.buttonList.add( new GuiButton( 8, width / 2 - 102, height / 2 + 80, 105, 20, "test" ) ); // Cancel
+        // button
 
         this.buttonList.add(new GuiSlider(1, width / 2 - 108, height / 2 - 63, "Red", 0, 255));
         this.buttonList.add(new GuiSlider(2, width / 2 - 108, height / 2 - 40, "Green", 0, 255));

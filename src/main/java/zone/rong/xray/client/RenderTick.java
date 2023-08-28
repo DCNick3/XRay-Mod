@@ -1,21 +1,24 @@
 package zone.rong.xray.client;
 
-/* Props goto CJB for the render functions and maths.
+/*
+ * Props goto CJB for the render functions and maths.
  * http://twitter.com/CJBMods
  * I pretty much copied this from his decompiled MoreInfo mod and bitbucket repo.
  */
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+
 import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import zone.rong.xray.FgtXRay;
 import zone.rong.xray.reference.BlockInfo;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RenderTick {
 
@@ -54,7 +57,7 @@ public class RenderTick {
         Tessellator tes = Tessellator.instance;
 
         List<BlockInfo> temp = new ArrayList();
-        temp.addAll(ores);    // If we dont make a copy then the thread in ClientTick will ConcurrentModificationException.
+        temp.addAll(ores); // If we dont make a copy then the thread in ClientTick will ConcurrentModificationException.
 
         for (BlockInfo b : temp) {
             bx = b.x;
