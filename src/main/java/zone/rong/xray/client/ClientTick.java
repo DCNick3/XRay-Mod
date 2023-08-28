@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -54,7 +55,7 @@ public class ClientTick implements Runnable {
                         continue;
                     }
 
-                    List temp = new ArrayList();
+                    List<BlockInfo> temp = new ArrayList<>();
                     int radius = FgtXRay.distNumbers[FgtXRay.distIndex]; // Get the radius around the player to search.
                     int px = FgtXRay.localPlyX;
                     int py = FgtXRay.localPlyY;
@@ -67,7 +68,8 @@ public class ClientTick implements Runnable {
                         {
                             for (int z = pz - radius; z < pz + radius; z++) // z axis.
                             {
-                                int id = Block.getIdFromBlock(mc.theWorld.getBlock(x, y, z));
+                                Block block = mc.theWorld.getBlock(x, y, z);
+                                int id = Block.getIdFromBlock(block);
                                 int meta = mc.theWorld.getBlockMetadata(x, y, z);
 
                                 if (mc.theWorld.getBlock(x, y, z)
@@ -75,15 +77,25 @@ public class ClientTick implements Runnable {
                                     meta = 0;
                                 }
 
+                                BlockInfo found = null;
+
                                 for (OreInfo ore : OresSearch.searchList) // Now we're actually checking if the current
                                                                           // x,y,z block is in our searchList.
                                 {
                                     if ((ore.draw) && (id == ore.id) && (meta == ore.meta)) // Dont check meta if its -1
                                                                                             // (custom)
                                     {
-                                        temp.add(new BlockInfo(x, y, z, ore.color)); // Add this block to the temp list
+                                        found = new BlockInfo(x, y, z, ore.color); // Add this block to the temp list
                                         break; // Found a match, move on to the next block.
                                     }
+                                }
+
+                                // yeah, lol, I'm doing this fork to find the fucking end portal
+                                if (block == Blocks.end_portal_frame) found = new BlockInfo(x, y, z, 0x00FF00);
+
+                                if (found != null) {
+                                    // Add this block to the temp list
+                                    temp.add(found);
                                 }
                             }
                         }
